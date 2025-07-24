@@ -12,16 +12,17 @@ const videoRouter = require("./routes/videoCreator");
 const cors = require('cors')
 
 // console.log("Hello")
-
+app.set('trust proxy', 1);              // IMPORTANT on Render/behind proxy
+app.use(cookieParser());                // <-- before your auth middleware
 app.use(cors({
-    origin: [
-        "https://code-editor-two-green.vercel.app",
-        "http://localhost:5173"
-    ],
-    credentials: true
+  origin: [
+    'http://localhost:5173',
+    'https://code-editor-two-green.vercel.app'
+  ],
+  credentials: true
 }));
 app.use(express.json());
-app.use(cookieParser());
+
 
 app.use('/user',authRouter);
 app.use('/problem',problemRouter);
